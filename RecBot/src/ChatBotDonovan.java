@@ -3,8 +3,8 @@ import java.util.Random;
 /**
  * A program to carry on conversations with a human user.
  * This version:
- * @author Mr. Levin
- * @version September 2017
+ * @author Donovan Guo
+ * @version October-November 2017
  */
 public class ChatBotDonovan
 {
@@ -16,7 +16,7 @@ public class ChatBotDonovan
 	 */	
 	public String getGreeting()
 	{
-		return "Hi, what is up?";
+		return "Hello how may I help you?";
 	}
 	
 	/**
@@ -32,18 +32,18 @@ public class ChatBotDonovan
 		
 		if (statement.length() == 0)
 		{
-			response = "Anyone there?";
+			response = "I cannot help you if I have nothing to work with.";
 		}
 
 		else if (findKeyword(statement, "no") >= 0)
 		{
-			response = "Why so negative?";
+			response = "Then what is the purpose in calling for me?";
                 	emotion--;
 		}
 		
-		else if (findKeyword(statement, "levin") >= 0)
+		else if (findKeyword(statement,"Restraunt") >= 0)
 		{
-			response = "More like LevinTheDream amiright?";
+			response = "I would reccomend Friendly's on 125 Church Ave, Brooklyn, NY 11218";
 			emotion++;
 		}
 
@@ -235,12 +235,12 @@ public class ChatBotDonovan
 		return randomHappyResponses [r.nextInt(randomHappyResponses.length)];
 	}
 	
-	private String [] randomNeutralResponses = {"Interesting, tell me more",
-			"Hmmm.",
-			"Do you really think so?",
-			"You don't say.",
-			"It's all boolean to me.",
-			"So, would you like to go for a walk?",
+	private String [] randomNeutralResponses = {"I don't think I can work with that.",
+			"I'm not sure what you mean",
+			"Nice Weather don't you say",
+			"How's it going",
+			"I not sure that's food related",
+			"I don't think I know enough to help you with that.",
 			"Could you say that again?"
 	};
 	private String [] randomAngryResponses = {"Bahumbug.", "Harumph", "The rage consumes me!"};
