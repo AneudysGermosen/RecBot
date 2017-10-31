@@ -35,6 +35,13 @@ public class ChatBotSteven
 		{
 			response = "Please say something, I can't help if you don't.";
 		}
+		
+		else if (findKeyword(statement, "rated", 0) >= 0)
+		{
+			response = ageCatagorizing(statement);
+			if (findKeyword(statement, "")
+		}
+		
 
 		else if (findKeyword(statement, "hate") >= 0)
 		{
@@ -48,8 +55,7 @@ public class ChatBotSteven
 			emotion++;
 		}
 
-		// Response transforming I want to statement
-		else if (findKeyword(statement, "scary", 0) >= 0)
+		else if (findKeyword(statement, "scary") >= 0 || findKeyword(statement, "gore") >= 0 || findKeyword(statement, "spooky") >= 0)
 		{
 			response = transformhorrorscaryspookysupernatural(statement);
 		}
@@ -65,7 +71,16 @@ public class ChatBotSteven
 		{
 			statement = statement.substring(0, statement.length() - 1);
 		}
-			return "Would you like me to give you a recommendation based on the rating?";
+		int psn = findKeyword(statement, "rated", 0);
+		String restofstatement = statement.substring(psn + 5).trim();
+		if (findKeyword(statement, "G") >= 0)
+		{
+			return "Some good rated" + restofstatement + "movies are" + radnomGratedmovies;
+		}
+		if (findKeyword(statement, "PG - 13") >= 0 || findKeyword(statement, "PG-13"))
+		{
+			return "Some good rated" + restofstatement + "movies are" + randomPG13ratedmovies;
+		}
 	}
 	private String transformhorrorscaryspookysupernatural(String statement)
 	{
@@ -221,5 +236,7 @@ public class ChatBotSteven
 	private String [] randomHappyResponses = {"H A P P Y, what's that spell?", "Today is a good day", "You make me feel like a brand new pair of shoes."};
 	private String [] randomNewScaryMovies = {"Happy Death Day.", "Anabelle: Creations.", "IT.", "Jigsaw.", "Get Out.", "Alience Covenant."};
 	private String [] randomNewComedyMovies = {"Baywatch", "Ghostbusters", "Bad Moms", "Deadpool", "The Big Sick"};
-	private String [] randomKidMovies = {""};
+	private String [] randomKidMovies = {"Captain Underpants", };
+	private String [] randomGratedmovies = {"poof"};
+	private String [] randomPG13ratedmovies = {""};
 }
