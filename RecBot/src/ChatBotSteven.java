@@ -36,15 +36,15 @@ public class ChatBotSteven
 			response = "Please say something, I can't help if you don't.";
 		}
 
-		else if (findKeyword(statement, "no") >= 0)
+		else if (findKeyword(statement, "hate") >= 0)
 		{
 			response = "Why so negative?";
                 	emotion--;
 		}
 		
-		else if (findKeyword(statement, "") >= 0)
+		else if (findKeyword(statement, "young", 0) >= 0 || findKeyword(statement, "below", 0) >= 0 && findKeyword(statement, "15", 0) >= 0)
 		{
-			response = "";
+			response = ageCatagorizing(statement);
 			emotion++;
 		}
 
@@ -57,9 +57,15 @@ public class ChatBotSteven
 		return response;
 	}
 	
-	private String transformIGenreStatement(String statement)
+	private String ageCatagorizing(String statement)
 	{
-		return "nothing";
+		statement = statement.trim();
+		String lastChar = statement.substring(statement.length() - 1);
+		if (lastChar.equals(".") || lastChar.equals("?") || lastChar.equals("!"))
+		{
+			statement = statement.substring(0, statement.length() - 1);
+		}
+			return "Would you like me to give you a recommendation based on the rating?";
 	}
 	private String transformhorrorscaryspookysupernatural(String statement)
 	{
@@ -158,6 +164,30 @@ public class ChatBotSteven
 	{
 		return findKeyword (statement, goal, 0);
 	}
+	
+	private int findNumber(String statement, int num)
+	{
+		String number = "" + num;
+		statement = statement.trim().toLowerCase();
+		int psn = statement.indexOf(number);
+		if (psn >= 0)
+		{
+			return psn;
+		}
+		
+		return -1;
+	}
+	
+	/*private int age(int num)
+	{
+		int result;
+		while (num >= 0)
+		{
+			result = num;
+			num--;
+		}
+		return result;
+	}*/
 	
 
 
