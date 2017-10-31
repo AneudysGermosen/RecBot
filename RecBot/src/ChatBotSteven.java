@@ -11,6 +11,11 @@ public class ChatBotSteven
 {
 	//emotion can alter the way our bot responds. Emotion can become more negative or positive over time.
 	int emotion = 0;
+	int prefHor = 0;
+	int prefcom = 0;
+	int prefani = 0;
+	int prefchil = 0;
+	int prefact = 0;
 	/**
 	 * Get a default greeting 	
 	 * @return a greeting
@@ -62,9 +67,19 @@ public class ChatBotSteven
 			response = animationMovies(statement);
 		}
 		
-		else
+		else if(findKeyword(statement, "action") >= 0 || findKeyword(statement, "thriller") >= 0)
+		{
+			response = actionMovies(statement);
+		}
+		
+		else if(findKeyword(statement, "wow") >= 0)
 		{
 			response = getRandomResponse();
+		}
+		
+		else
+		{
+			response = "Sorry I currently do not have the knowlegde to answer that";
 		}
 		
 		return response;
@@ -98,7 +113,7 @@ public class ChatBotSteven
 			statement = statement.substring(0, statement.length() - 1);
 		}
 		
-		return "If you like scary stuff, you can try watching " + horrorList();
+		return "If that is what you like, you should try watching " + horrorList() + ", really gets your heart racing!";
 		
 	}
 	
@@ -111,7 +126,7 @@ public class ChatBotSteven
 			statement = statement.substring(0, statement.length() - 1);
 		}
 		
-		return "If you want something funny you can try watching " + comedyList();
+		return comedyList() + "is a really funny one, don't eat anything while watching, you won't be able to breath!";
 	}
 	
 	private String animationMovies(String statement)
@@ -123,7 +138,19 @@ public class ChatBotSteven
 			statement = statement.substring(0, statement.length() - 1);
 		}
 		
-		return "If you want something animated one really good movie is " + animatedList();
+		return "If you want something animated one really deep and emotional one is " + animatedList();
+	}
+	
+	private String actionMovies(String statement)
+	{
+		statement = statement.trim();
+		String lastChar = statement.substring(statement.length() - 1);
+		if (lastChar.equals(".") || lastChar.equals("?") || lastChar.equals("!"))
+		{
+			statement = statement.substring(0, statement.length() - 1);
+		}
+		
+		return "Trust me, after watching " + actionList() + " you'd want to try out some crazy moves for yourself.";
 	}
 	
 	private int findKeyword(String statement, String goal,
@@ -223,6 +250,11 @@ public class ChatBotSteven
 		return randomAnimatedMovies [r.nextInt(randomAnimatedMovies.length)];
 	}
 	
+	private String actionList()
+	{
+		Random r = new Random();
+		return randomNewActionMovies [r.nextInt(randomNewActionMovies.length)];
+	}
 	private String GList()
 	{
 		Random r = new Random();
@@ -272,6 +304,10 @@ public class ChatBotSteven
 			"Bambi.", 
 			"Princess Mononoke.",
 			"Beauty and the Beast"
+		};
+	private String [] randomNewActionMovies =
+		{
+			"The Foreigner"
 		};
 	private String [] randomGratedmovies = 
 		{
