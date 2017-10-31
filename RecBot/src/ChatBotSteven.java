@@ -39,25 +39,32 @@ public class ChatBotSteven
 		else if (findKeyword(statement, "rated", 0) >= 0)
 		{
 			response = ageCatagorizing(statement);
-			if (findKeyword(statement, "")
 		}
 		
-
 		else if (findKeyword(statement, "hate") >= 0)
 		{
 			response = "Why so negative?";
                 	emotion--;
 		}
-		
-		else if (findKeyword(statement, "young", 0) >= 0 || findKeyword(statement, "below", 0) >= 0 && findKeyword(statement, "15", 0) >= 0)
-		{
-			response = ageCatagorizing(statement);
-			emotion++;
-		}
 
-		else if (findKeyword(statement, "scary") >= 0 || findKeyword(statement, "gore") >= 0 || findKeyword(statement, "spooky") >= 0)
+		else if (findKeyword(statement, "scary") >= 0 || findKeyword(statement, "gore") >= 0 || findKeyword(statement, "spooky") >= 0 || findKeyword(statement, "horror") >= 0)
 		{
-			response = transformhorrorscaryspookysupernatural(statement);
+			response = horrorMovies(statement);
+		}
+		
+		else if (findKeyword(statement, "funny") >= 0 || findKeyword(statement, "comedy") >= 0 || findKeyword(statement, "laugh") >= 0)
+		{
+			response = comedyMovies(statement);
+		}
+		
+		else if (findKeyword(statement, "animated") >= 0 || findKeyword(statement, "animation") >= 0 || findKeyword(statement, "motion picture") >= 0)
+		{
+			response = animationMovies(statement);
+		}
+		
+		else
+		{
+			response = getRandomResponse();
 		}
 		
 		return response;
@@ -71,18 +78,18 @@ public class ChatBotSteven
 		{
 			statement = statement.substring(0, statement.length() - 1);
 		}
-		int psn = findKeyword(statement, "rated", 0);
-		String restofstatement = statement.substring(psn + 5).trim();
+		String result = "";
 		if (findKeyword(statement, "G") >= 0)
 		{
-			return "Some good rated" + restofstatement + "movies are" + radnomGratedmovies;
+			result = "If you want a G rated movie, " + GList() + "is a great choice for kids";
 		}
-		if (findKeyword(statement, "PG - 13") >= 0 || findKeyword(statement, "PG-13"))
+		else if ((findKeyword(statement, "PG - 13") >= 0) || (findKeyword(statement, "PG-13") >= 0))
 		{
-			return "Some good rated" + restofstatement + "movies are" + randomPG13ratedmovies;
+			result = "A great pg-13 movies is " + pg13List();
 		}
+		return result;
 	}
-	private String transformhorrorscaryspookysupernatural(String statement)
+	private String horrorMovies(String statement)
 	{
 		statement = statement.trim();
 		String lastChar = statement.substring(statement.length() - 1);
@@ -91,23 +98,11 @@ public class ChatBotSteven
 			statement = statement.substring(0, statement.length() - 1);
 		}
 		
-		return "If you like scary stuff, you can try watching " + randomNewScaryMovies;
+		return "If you like scary stuff, you can try watching " + horrorList();
 		
-	}
-	
-	private String transformComedyHappy(String statement)
-	{
-		statement = statement.trim();
-		String lastChar = statement.substring(statement.length() - 1);
-		if (lastChar.equals(".") || lastChar.equals("?") || lastChar.equals("!"))
-		{
-			statement = statement.substring(0, statement.length() - 1);
-		}
-		
-		return "If you want something funny you can try watching " + randomNewComedyMovies;
 	}
 	
-	private String transformKidsfamilyfriendly(String statement)
+	private String comedyMovies(String statement)
 	{
 		statement = statement.trim();
 		String lastChar = statement.substring(statement.length() - 1);
@@ -116,7 +111,19 @@ public class ChatBotSteven
 			statement = statement.substring(0, statement.length() - 1);
 		}
 		
-		return "If you want something funny you can try watching " ;
+		return "If you want something funny you can try watching " + comedyList();
+	}
+	
+	private String animationMovies(String statement)
+	{
+		statement = statement.trim();
+		String lastChar = statement.substring(statement.length() - 1);
+		if (lastChar.equals(".") || lastChar.equals("?") || lastChar.equals("!"))
+		{
+			statement = statement.substring(0, statement.length() - 1);
+		}
+		
+		return "If you want something animated one really good movie is " + animatedList();
 	}
 	
 	private int findKeyword(String statement, String goal,
@@ -179,38 +186,12 @@ public class ChatBotSteven
 	{
 		return findKeyword (statement, goal, 0);
 	}
-	
-	private int findNumber(String statement, int num)
-	{
-		String number = "" + num;
-		statement = statement.trim().toLowerCase();
-		int psn = statement.indexOf(number);
-		if (psn >= 0)
-		{
-			return psn;
-		}
-		
-		return -1;
-	}
-	
-	/*private int age(int num)
-	{
-		int result;
-		while (num >= 0)
-		{
-			result = num;
-			num--;
-		}
-		return result;
-	}*/
-	
-
 
 	/**
 	 * Pick a default response to use if nothing else fits.
 	 * @return a non-committal string
 	 */
-	private String getRandomResponse ()
+	private String getRandomResponse()
 	{
 		Random r = new Random ();
 		if (emotion == 0)
@@ -224,6 +205,35 @@ public class ChatBotSteven
 		return randomHappyResponses [r.nextInt(randomHappyResponses.length)];
 	}
 	
+	private String horrorList()
+	{
+		Random r = new Random();
+		return randomNewScaryMovies [r.nextInt(randomNewScaryMovies.length)];
+	}
+	
+	private String comedyList()
+	{
+		Random r = new Random();
+		return randomNewComedyMovies [r.nextInt(randomNewComedyMovies.length)];
+	}
+	
+	private String animatedList()
+	{
+		Random r = new Random();
+		return randomAnimatedMovies [r.nextInt(randomAnimatedMovies.length)];
+	}
+	
+	private String GList()
+	{
+		Random r = new Random();
+		return randomGratedmovies [r.nextInt(randomGratedmovies.length)];
+	}
+	
+	private String pg13List()
+	{
+		Random r = new Random();
+		return randomPG13ratedmovies [r.nextInt(randomPG13ratedmovies.length)];
+	}
 	private String [] randomNeutralResponses = {"Interesting, tell me more",
 			"Hmmm.",
 			"Do you really think so?",
@@ -234,9 +244,53 @@ public class ChatBotSteven
 	};
 	private String [] randomAngryResponses = {"Bahumbug.", "Harumph", "The rage consumes me!"};
 	private String [] randomHappyResponses = {"H A P P Y, what's that spell?", "Today is a good day", "You make me feel like a brand new pair of shoes."};
-	private String [] randomNewScaryMovies = {"Happy Death Day.", "Anabelle: Creations.", "IT.", "Jigsaw.", "Get Out.", "Alience Covenant."};
-	private String [] randomNewComedyMovies = {"Baywatch", "Ghostbusters", "Bad Moms", "Deadpool", "The Big Sick"};
-	private String [] randomKidMovies = {"Captain Underpants", };
-	private String [] randomGratedmovies = {"poof"};
-	private String [] randomPG13ratedmovies = {""};
+	private String [] randomNewScaryMovies = 
+		{
+			"Happy Death Day.", 
+			"Anabelle: Creations.", 
+			"IT.", "Jigsaw.", 
+			"Get Out.", 
+			"Alience Covenant."
+		};
+	private String [] randomNewComedyMovies = 
+		{
+			"Baywatch.", 
+			"Ghostbusters.", 
+			"Bad Moms.", 
+			"Deadpool.", 
+			"The Big Sick."
+		};
+	private String [] randomAnimatedMovies = 
+		{
+			"Snow White and the Seven Dwarfs.", 
+			"Up.", 
+			"Totoro.", 
+			"Spirited Away.", 
+			"The Secret World of Arriety.",
+			"When Marnie Was There.", 
+			"The Tale of Princess Kaguya.", 
+			"Bambi.", 
+			"Princess Mononoke.",
+			"Beauty and the Beast"
+		};
+	private String [] randomGratedmovies = 
+		{
+			"Zootopia", "Inside Out", 
+			"Finding Nemo", 
+			"Toy Story", 
+			"The Lion King", 
+			"Aladdin", "WALL-E", 
+			"Mulan", "Ratatouille", 
+			"Cars", 
+			"The Polar Express"
+		};
+	private String [] randomPG13ratedmovies = 
+		{
+			"The Dark Knight", 
+			"The Avengers", 
+			"Avatar", 
+			"The Hunger Games", 
+			"Jurassic Park", 
+			"Iron Man"
+		};
 }
