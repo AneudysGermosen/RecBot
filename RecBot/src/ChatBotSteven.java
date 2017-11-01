@@ -5,16 +5,15 @@ import java.util.Random;
  * This version: 1.0?
  * Author: Steven Fong
  * Period 2
- * Last update: 10/28/17
+ * Last update: 10/31/17
  */
 public class ChatBotSteven
 {
-	//emotion can alter the way our bot responds. Emotion can become more negative or positive over time.
+	//emotion and preference can alter the way our bot responds. Both can become more negative or positive over time.
 	int emotion = 0;
-	int prefHor = 0;
+	int prefhor = 0;
 	int prefcom = 0;
 	int prefani = 0;
-	int prefchil = 0;
 	int prefact = 0;
 	/**
 	 * Get a default greeting 	
@@ -22,7 +21,7 @@ public class ChatBotSteven
 	 */	
 	public String getGreeting()
 	{
-		return "Hi, how can I help you today?";
+		return "Hi, what would you like to watch today?";
 	}
 	
 	/**
@@ -41,15 +40,28 @@ public class ChatBotSteven
 			response = "Please say something, I can't help if you don't.";
 		}
 		
+		else if ((findKeyword(statement, "hate") >= 0 && findKeyword(statement, "want") < 0) || (findKeyword(statement, "dislike") >= 0 && findKeyword(statement, "want") < 0) || (findKeyword(statement, "prefer not") >= 0 && findKeyword(statement, "want") < 0))
+		{
+			if (findKeyword(statement, "scary") >= 0 || findKeyword(statement, "gore") >= 0 || findKeyword(statement, "spooky") >= 0 || findKeyword(statement, "horror") >= 0)
+			{
+				response = "I will try to avoid recommending you anything too scary.";
+				prefhor--;
+			}
+			else if (findKeyword(statement, "funny") >= 0 || findKeyword(statement, "comedy") >= 0 || findKeyword(statement, "laugh") >= 0)
+			{
+				response = "I will try to keep my recommendations serious!!";
+				prefcom--;
+			}
+			else if (findKeyword(statement, "animated") >= 0 || findKeyword(statement, "animation") >= 0 || findKeyword(statement, "motion picture") >= 0)
+			{
+				response = "Got it, I'll limit the animations recommendations just for you.";
+				prefani--;
+			}
+		}
+		
 		else if (findKeyword(statement, "rated", 0) >= 0)
 		{
 			response = ageCatagorizing(statement);
-		}
-		
-		else if (findKeyword(statement, "hate") >= 0)
-		{
-			response = "Why so negative?";
-                	emotion--;
 		}
 
 		else if (findKeyword(statement, "scary") >= 0 || findKeyword(statement, "gore") >= 0 || findKeyword(statement, "spooky") >= 0 || findKeyword(statement, "horror") >= 0)
@@ -84,7 +96,8 @@ public class ChatBotSteven
 		
 		return response;
 	}
-	
+	// The following methods below each correspond to a different list of movies.
+	// the ageCatagorizing method contains the different movie rating lists.
 	private String ageCatagorizing(String statement)
 	{
 		statement = statement.trim();
@@ -278,31 +291,32 @@ public class ChatBotSteven
 	private String [] randomHappyResponses = {"H A P P Y, what's that spell?", "Today is a good day", "You make me feel like a brand new pair of shoes."};
 	private String [] randomNewScaryMovies = 
 		{
-			"Happy Death Day.", 
-			"Anabelle: Creations.", 
-			"IT.", "Jigsaw.", 
-			"Get Out.", 
-			"Alience Covenant."
+			"Happy Death Day", 
+			"Anabelle: Creations", 
+			"IT", 
+			"Jigsaw", 
+			"Get Out", 
+			"Alience Covenant"
 		};
 	private String [] randomNewComedyMovies = 
 		{
-			"Baywatch.", 
-			"Ghostbusters.", 
-			"Bad Moms.", 
-			"Deadpool.", 
-			"The Big Sick."
+			"Baywatch", 
+			"Ghostbusters", 
+			"Bad Moms", 
+			"Deadpool", 
+			"The Big Sick"
 		};
 	private String [] randomAnimatedMovies = 
 		{
-			"Snow White and the Seven Dwarfs.", 
-			"Up.", 
-			"Totoro.", 
-			"Spirited Away.", 
-			"The Secret World of Arriety.",
-			"When Marnie Was There.", 
-			"The Tale of Princess Kaguya.", 
-			"Bambi.", 
-			"Princess Mononoke.",
+			"Snow White and the Seven Dwarfs", 
+			"Up", 
+			"Totoro", 
+			"Spirited Away", 
+			"The Secret World of Arriety",
+			"When Marnie Was There", 
+			"The Tale of Princess Kaguya", 
+			"Bambi", 
+			"Princess Mononoke",
 			"Beauty and the Beast"
 		};
 	private String [] randomNewActionMovies =
@@ -315,8 +329,10 @@ public class ChatBotSteven
 			"Finding Nemo", 
 			"Toy Story", 
 			"The Lion King", 
-			"Aladdin", "WALL-E", 
-			"Mulan", "Ratatouille", 
+			"Aladdin", 
+			"WALL-E", 
+			"Mulan", 
+			"Ratatouille", 
 			"Cars", 
 			"The Polar Express"
 		};
