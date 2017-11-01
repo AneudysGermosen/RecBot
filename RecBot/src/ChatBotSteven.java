@@ -182,6 +182,22 @@ public class ChatBotSteven
 		return "Trust me, after watching " + actionList() + " you'd want to try out some crazy moves for yourself.";
 	}
 	
+	/**
+	 * Search for one word in phrase. The search is not case
+	 * sensitive. This method will check that the given goal
+	 * is not a substring of a longer string (so, for
+	 * example, "I know" does not contain "no").
+	 *
+	 * @param statement
+	 *            the string to search
+	 * @param goal
+	 *            the string to search for
+	 * @param startPos
+	 *            the character of the string to begin the
+	 *            search at
+	 * @return the index of the first occurrence of goal in
+	 *         statement or -1 if it's not found
+	 */
 	private int findKeyword(String statement, String goal,
 			int startPos)
 	{
@@ -229,15 +245,7 @@ public class ChatBotSteven
 
 		return -1;
 	}
-	
-	/**
-	 * Search for one word in phrase.  The search is not case sensitive.
-	 * This method will check that the given goal is not a substring of a longer string
-	 * (so, for example, "I know" does not contain "no").  The search begins at the beginning of the string.   
-	 * @param statement the string to search
-	 * @param goal the string to search for
-	 * @return the index of the first occurrence of goal in statement or -1 if it's not found
-	 */
+	//Shortened version for position starting at 0.
 	private int findKeyword(String statement, String goal)
 	{
 		return findKeyword (statement, goal, 0);
