@@ -40,22 +40,30 @@ public class ChatBotSteven
 			response = "Please say something, I can't help if you don't.";
 		}
 		
-		else if ((findKeyword(statement, "hate") >= 0 && findKeyword(statement, "want") < 0) || (findKeyword(statement, "dislike") >= 0 && findKeyword(statement, "want") < 0) || (findKeyword(statement, "prefer not") >= 0 && findKeyword(statement, "want") < 0))
+		if (findKeyword(statement, "hate") >= 0 || findKeyword(statement, "dislike") >= 0 || findKeyword(statement, "prefer not") >= 0)
 		{
-			if (findKeyword(statement, "scary") >= 0 || findKeyword(statement, "gore") >= 0 || findKeyword(statement, "spooky") >= 0 || findKeyword(statement, "horror") >= 0)
+			if(findKeyword(statement, "want") < 0)
 			{
-				response = "I will try to avoid recommending you anything too scary.";
-				prefhor--;
-			}
-			else if (findKeyword(statement, "funny") >= 0 || findKeyword(statement, "comedy") >= 0 || findKeyword(statement, "laugh") >= 0)
-			{
-				response = "I will try to keep my recommendations serious!!";
-				prefcom--;
-			}
-			else if (findKeyword(statement, "animated") >= 0 || findKeyword(statement, "animation") >= 0 || findKeyword(statement, "motion picture") >= 0)
-			{
-				response = "Got it, I'll limit the animations recommendations just for you.";
-				prefani--;
+				if (findKeyword(statement, "scary") >= 0 || findKeyword(statement, "gore") >= 0 || findKeyword(statement, "spooky") >= 0 || findKeyword(statement, "horror") >= 0)
+				{
+					response = "I will try to avoid recommending you anything too scary.";
+					prefhor--;
+				}
+				else if (findKeyword(statement, "funny") >= 0 || findKeyword(statement, "comedy") >= 0 || findKeyword(statement, "laugh") >= 0)
+				{
+					response = "I will try to keep my recommendations serious!!";
+					prefcom--;
+				}
+				else if (findKeyword(statement, "animated") >= 0 || findKeyword(statement, "animation") >= 0 || findKeyword(statement, "motion picture") >= 0)
+				{
+					response = "Got it, I'll limit the animations recommendations just for you.";
+					prefani--;
+				}
+				else if(findKeyword(statement, "action") >= 0 || findKeyword(statement, "thriller") >= 0)
+				{
+					response = "I mean...I guess if you don't want me to I won't give you any more action movies...";
+					prefact--;
+				}
 			}
 		}
 		
@@ -139,7 +147,7 @@ public class ChatBotSteven
 			statement = statement.substring(0, statement.length() - 1);
 		}
 		
-		return comedyList() + "is a really funny one, don't eat anything while watching, you won't be able to breath!";
+		return comedyList() + " is a really funny one, don't eat anything while watching, you won't be able to breath!";
 	}
 	
 	private String animationMovies(String statement)
