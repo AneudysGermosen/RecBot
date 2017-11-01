@@ -15,8 +15,9 @@ public class ChatBotRunner
 	{
 		ChatBotSajarin chatbot1 = new ChatBotSajarin();
 		ChatBotSteven chatbot2 = new ChatBotSteven();
+		ChatBotDonovan chatbot3 = new ChatBotDonovan();
 		
-		System.out.println (chatbot1.getGreeting());
+		System.out.println (chatbot3.getGreeting());
 		Scanner in = new Scanner (System.in);
 		String statement = in.nextLine();
 		
@@ -24,7 +25,7 @@ public class ChatBotRunner
 
 		while (!statement.equals("Bye"))
 		{
-			System.out.println (chatbot1.getResponse(statement));
+			System.out.println (chatbot3.getResponse(statement));
 			statement = in.nextLine();
 		}
 	}

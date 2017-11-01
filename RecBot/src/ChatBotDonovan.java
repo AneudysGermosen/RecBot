@@ -1,9 +1,10 @@
 import java.util.Random;
+import java.util.Scanner;
 
 /**
  * A program to carry on conversations with a human user.
  * This version:
- * @author Donovan Guo
+ * @author Donovan Guo Period 2 
  * @version October-November 2017
  */
 public class ChatBotDonovan
@@ -32,7 +33,7 @@ public class ChatBotDonovan
 		
 		if (statement.length() == 0)
 		{
-			response = "I cannot help you if I have nothing to work with.";
+			response = "I can't help you if I have nothing to work with.";
 		}
 
 		else if (findKeyword(statement, "no") >= 0)
@@ -41,12 +42,33 @@ public class ChatBotDonovan
                 	emotion--;
 		}
 		
-		else if (findKeyword(statement,"Restraunt") >= 0)
+		else if (findKeyword(statement,"Chinese") >= 0)
 		{
 			response = "I would reccomend Friendly's on 125 Church Ave, Brooklyn, NY 11218";
 			emotion++;
 		}
-
+		else if (findKeyword(statement,"Italian") >= 0) 
+		{
+			response ="Olive Garden is decent, I wouldnt order the pizza though.";
+			emotion++;
+		}
+		else if (findKeyword(statement,"Korean") >= 0)
+		{
+			response ="I'd recommend any shop in K-town but if you really want an amazing experience Tofu house is the way to go.";
+			emotion++;
+		}
+		//Rock,Paper,Scissors.
+		if (findKeyword(statement,"Game") >= 0) 
+		{
+			response = "";
+			rpsgame();
+			response =" ,want to play again? If you do type (game)";
+		
+		
+				
+		}
+		
+		
 		// Response transforming I want to statement
 		else if (findKeyword(statement, "I want to", 0) >= 0)
 		{
@@ -216,7 +238,70 @@ public class ChatBotDonovan
 	}
 	
 
-
+	private void rpsgame()
+	{System.out.println("Speaking of games let's play Rock, Paper, Scissors?");
+		Scanner in = new Scanner (System.in);
+		boolean isvalid = false;
+		while (!isvalid) 
+		{
+			System.out.print("Please choose Rock,Paper,or Scissors");
+			Random r = new Random ();
+			String compchoice =(rpsResponses[r.nextInt(rpsResponses.length)]);
+			String statement = in.nextLine();
+			
+			if (statement.equals("Rock") || statement.equals("rock"))
+			{
+				isvalid = true;
+				System.out.println(compchoice);
+				if (compchoice.equals("Rock"))
+				{
+					System.out.print("We Drawed");
+				}
+				else if (compchoice.equals("Scissors"))
+				{
+					System.out.print("You Win Congrats");
+				}
+				else if (compchoice.equals("Paper"))
+				{
+					System.out.print("I Win This Time!");
+				}
+			}
+			else if (statement.equals("Scissors") || statement.equals("scissors")) 
+			{
+				isvalid = true;
+				System.out.println(compchoice);
+				if (compchoice.equals("Rock"))
+				{
+					System.out.print("I Win This Time");
+				}
+				else if (compchoice.equals("Scissors"))
+				{
+					System.out.print("We Drawed");
+				}
+				else if (compchoice.equals("Paper"))
+				{
+					System.out.print("You Win Congrats");
+				}
+			}
+			else if (statement.equals("Paper") || statement.equals("paper")) 
+			{
+				isvalid = true;
+				System.out.println(compchoice);
+				if (compchoice.equals("Rock"))
+				{
+					System.out.print("You Win Congrats");
+				}
+				else if (compchoice.equals("Scissors"))
+				{
+					System.out.print("I Win This Time");
+				}
+				else if (compchoice.equals("Paper"))
+				{
+					System.out.print("We Drawed");
+				}
+			}
+		}
+	}
 	/**
 	 * Pick a default response to use if nothing else fits.
 	 * @return a non-committal string
@@ -243,7 +328,8 @@ public class ChatBotDonovan
 			"I don't think I know enough to help you with that.",
 			"Could you say that again?"
 	};
-	private String [] randomAngryResponses = {"Bahumbug.", "Harumph", "The rage consumes me!"};
-	private String [] randomHappyResponses = {"H A P P Y, what's that spell?", "Today is a good day", "You make me feel like a brand new pair of shoes."};
+	private String [] randomAngryResponses = {"Bleh.", "I don't think this conversationt will continue", "Have a good day bye."};
+	private String [] randomHappyResponses = {"I'm am very excited", "Today's a great day for food...like everyday", "Ready for another day?"};
+	private String [] rpsResponses = {"Rock","Paper","Scissors"};
 	
 }
