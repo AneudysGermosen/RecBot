@@ -48,6 +48,7 @@ public class ChatBotSteven
 				{
 					response = "I will try to avoid recommending you anything too scary.";
 					prefhor--;
+					emotion--;
 				}
 				else if (findKeyword(statement, "funny") >= 0 || findKeyword(statement, "comedy") >= 0 || findKeyword(statement, "laugh") >= 0)
 				{
@@ -58,6 +59,7 @@ public class ChatBotSteven
 				{
 					response = "Got it, I'll limit the animations recommendations just for you.";
 					prefani--;
+					emotion--;
 				}
 				else if(findKeyword(statement, "action") >= 0 || findKeyword(statement, "thriller") >= 0)
 				{
@@ -75,21 +77,27 @@ public class ChatBotSteven
 		else if (findKeyword(statement, "scary") >= 0 || findKeyword(statement, "gore") >= 0 || findKeyword(statement, "spooky") >= 0 || findKeyword(statement, "horror") >= 0)
 		{
 			response = horrorMovies(statement);
+			prefhor++;
+			emotion++;
 		}
 		
 		else if (findKeyword(statement, "funny") >= 0 || findKeyword(statement, "comedy") >= 0 || findKeyword(statement, "laugh") >= 0)
 		{
 			response = comedyMovies(statement);
+			prefcom++;
 		}
 		
 		else if (findKeyword(statement, "animated") >= 0 || findKeyword(statement, "animation") >= 0 || findKeyword(statement, "motion picture") >= 0)
 		{
 			response = animationMovies(statement);
+			prefani++;
+			emotion++;
 		}
 		
 		else if(findKeyword(statement, "action") >= 0 || findKeyword(statement, "thriller") >= 0)
 		{
 			response = actionMovies(statement);
+			prefact++;
 		}
 		
 		else if(findKeyword(statement, "wow") >= 0)
@@ -121,7 +129,7 @@ public class ChatBotSteven
 		}
 		else if ((findKeyword(statement, "PG - 13") >= 0) || (findKeyword(statement, "PG-13") >= 0))
 		{
-			result = "A great pg-13 movies is " + pg13List();
+			result = "A great pg-13 movie is " + pg13List();
 		}
 		return result;
 	}
@@ -329,7 +337,14 @@ public class ChatBotSteven
 		};
 	private String [] randomNewActionMovies =
 		{
-			"The Foreigner"
+			"The Foreigner",
+			"Iron Man",
+			"Man of Steel",
+			"White House Down",
+			"Thor",
+			"Spider-Man Homecoming",
+			"The Terminator",
+			"Mad Max: Fury Road"
 		};
 	private String [] randomGratedmovies = 
 		{

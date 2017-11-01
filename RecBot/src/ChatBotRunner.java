@@ -13,7 +13,8 @@ public class ChatBotRunner
 	 */
 	public static void main(String[] args)
 	{
-		//ChatBotSajarin chatbot1 = new ChatBotSajarin(); sorry just testing right now
+		//ChatBotSajarin chatbot1 = new ChatBotSajarin(); 
+		//sorry just testing right now
 		ChatBotSteven chatbot2 = new ChatBotSteven();
 		
 		System.out.println (chatbot2.getGreeting());
