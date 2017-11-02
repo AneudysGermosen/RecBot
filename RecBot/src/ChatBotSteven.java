@@ -99,16 +99,19 @@ public class ChatBotSteven
 			response = actionMovies(statement);
 			prefact++;
 		}
-		
-		else if(findKeyword(statement, "wow") >= 0)
+		else
 		{
+			if (findKeyword(statement, "genre") >= 0)
+			{
+				response = getmoreRandomResponse();
+			}
 			response = getRandomResponse();
 		}
 		
-		else
+		/*else
 		{
 			response = "Sorry I currently do not have the knowlegde to answer that";
-		}
+		}*/
 		
 		return response;
 	}
@@ -269,6 +272,20 @@ public class ChatBotSteven
 		return randomHappyResponses [r.nextInt(randomHappyResponses.length)];
 	}
 	
+	private String getmoreRandomResponse()
+	{
+		Random r = new Random();
+		if (prefhor > prefcom && prefhor > prefani && prefhor > prefact)
+		{
+			return randomprefhorResponses [r.nextInt(randomprefhorResponses.length)];
+		}
+		else if (prefcom > prefhor && prefcom > prefani && prefcom > prefact)
+		{
+			return randomprefcomResponses [r.nextInt(randomprefcomResponses.length)];
+		}
+		return "nothing!";
+	}
+	
 	private String horrorList()
 	{
 		Random r = new Random();
@@ -313,6 +330,19 @@ public class ChatBotSteven
 	};
 	private String [] randomAngryResponses = {"Bahumbug.", "Harumph", "The rage consumes me!"};
 	private String [] randomHappyResponses = {"H A P P Y, what's that spell?", "Today is a good day", "You make me feel like a brand new pair of shoes."};
+	private String [] randomprefhorResponses =
+		{
+			"You like horror as much as I do!!",
+			"One great classic is The Ring, its about a movie where if you watch it you de in seven days! There have been many remakes of it but I think I prefer the original one, You should try it out.",
+			"You chose the correct genre!!",
+			"Gore! Blood! Death! JUMPSCARES! Good to get your heart racing you know....",
+			"Not part of the topic but you should read some books by Steven King if you like gothic literature."
+		};
+	private String [] randomprefcomResponses =
+		{
+			"I like funny stuff too but I like comedy TV shows more than movies, their kind of boring in my opinion.",
+			"If I were you I wouldn't watch comedy movies."
+		};
 	private String [] randomNewScaryMovies = 
 		{
 			"Happy Death Day", 
