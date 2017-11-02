@@ -237,11 +237,11 @@ public class ChatBotDonovan
 	
 	private String [] randomNeutralResponses = {"I don't think I can work with that.",
 			"I'm not sure what you mean",
-			"Nice Weather don't you say",
+			"Out of Rock,Paper, and Scissor which do you like the most?",
 			"How's it going",
 			"I not sure that's food related",
 			"I don't think I know enough to help you with that.",
-			"Could you say that again?"
+			"Sorry I was thinking about how to beat you. What did you say?"
 	};
 	private String [] randomAngryResponses = {"Bahumbug.", "Harumph", "The rage consumes me!"};
 	private String [] randomHappyResponses = {"H A P P Y, what's that spell?", "Today is a good day", "You make me feel like a brand new pair of shoes."};

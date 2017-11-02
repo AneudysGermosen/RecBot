@@ -42,7 +42,7 @@ public class ChatBotAneudys
                 	lit++;
 		}
 		
-		else if (findKeyword(statement, "Rock") >= 0
+		else if (findKeyword(statement, "Rock") >= 0)
 		{
 			response = rockGenre(statement);
 			emotion++;
