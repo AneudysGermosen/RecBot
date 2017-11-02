@@ -10,13 +10,14 @@ public class ChatBotAneudys
 {
 	//emotion can alter the way our bot responds. Emotion can become more negative or positive over time.
 	int emotion = 0;
+	int lit = 0;
 	/**
 	 * Get a default greeting 	
 	 * @return a greeting
 	 */	
 	public String getGreeting()
 	{
-		return "Eyy whats good?";
+		return " Hey, what kind of music are you into?";
 	}
 	
 	/**
@@ -35,22 +36,22 @@ public class ChatBotAneudys
 			response = "Hello?";
 		}
 
-		else if (findKeyword(statement, "no") >= 0)
+		else if (findKeyword(statement, "rap") >= 0||findKeyword(statement, "hip-hop")>=0)
 		{
-			response = "Why so negative?";
-                	emotion--;
+			response = rapGenre(statement);
+                	lit++;
 		}
 		
-		else if (findKeyword(statement, "levin") >= 0)
+		else if (findKeyword(statement, "Rock") >= 0
 		{
-			response = "More like LevinTheDream amiright?";
+			response = rockGenre(statement);
 			emotion++;
 		}
 
 		// Response transforming I want to statement
-		else if (findKeyword(statement, "I want to", 0) >= 0)
+		else if (findKeyword(statement, "jazz", 0) >= 0)
 		{
-			response = transformIWantToStatement(statement);
+			response = jazzGenre(statement);
 		}
 		else if (findKeyword(statement, "I want",0) >= 0)
 		{
@@ -70,7 +71,7 @@ public class ChatBotAneudys
 	 * @param statement the user statement, assumed to contain "I want to"
 	 * @return the transformed statement
 	 */
-	private String transformIWantToStatement(String statement)
+	private String rapGenre(String statement)
 	{
 		//  Remove the final period, if there is one
 		statement = statement.trim();
@@ -93,7 +94,7 @@ public class ChatBotAneudys
 	 * @param statement the user statement, assumed to contain "I want"
 	 * @return the transformed statement
 	 */
-	private String transformIWantStatement(String statement)
+	private String rockGenre(String statement)
 	{
 		//  Remove the final period, if there is one
 		statement = statement.trim();
@@ -116,7 +117,7 @@ public class ChatBotAneudys
 	 * @param statement the user statement, assumed to contain "I" followed by "you"
 	 * @return the transformed statement
 	 */
-	private String transformIYouStatement(String statement)
+	private String jazzGenre(String statement)
 	{
 		//  Remove the final period, if there is one
 		statement = statement.trim();
