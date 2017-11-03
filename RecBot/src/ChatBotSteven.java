@@ -5,19 +5,23 @@ import java.util.Random;
  * This version: 1.0?
  * Author: Steven Fong
  * Period 2
- * Last update: 10/28/17
+ * Last update: 10/31/17
  */
 public class ChatBotSteven
 {
-	//emotion can alter the way our bot responds. Emotion can become more negative or positive over time.
+	//emotion and preference can alter the way our bot responds. Both can become more negative or positive over time.
 	int emotion = 0;
+	int prefhor = 0;
+	int prefcom = 0;
+	int prefani = 0;
+	int prefact = 0;
 	/**
 	 * Get a default greeting 	
 	 * @return a greeting
 	 */	
 	public String getGreeting()
 	{
-		return "Hi, how can I help you today?";
+		return "Hi, what would you like to watch today?";
 	}
 	
 	/**
@@ -35,33 +39,104 @@ public class ChatBotSteven
 		{
 			response = "Please say something, I can't help if you don't.";
 		}
-
-		else if (findKeyword(statement, "no") >= 0)
+		
+		if (findKeyword(statement, "hate") >= 0 || findKeyword(statement, "dislike") >= 0 || findKeyword(statement, "prefer not") >= 0)
 		{
-			response = "Why so negative?";
-                	emotion--;
+			if(findKeyword(statement, "want") < 0)
+			{
+				if (findKeyword(statement, "scary") >= 0 || findKeyword(statement, "gore") >= 0 || findKeyword(statement, "spooky") >= 0 || findKeyword(statement, "horror") >= 0)
+				{
+					response = "I will try to avoid recommending you anything too scary.";
+					prefhor--;
+					emotion--;
+				}
+				else if (findKeyword(statement, "funny") >= 0 || findKeyword(statement, "comedy") >= 0 || findKeyword(statement, "laugh") >= 0)
+				{
+					response = "I will try to keep my recommendations serious!!";
+					prefcom--;
+				}
+				else if (findKeyword(statement, "animated") >= 0 || findKeyword(statement, "animation") >= 0 || findKeyword(statement, "motion picture") >= 0)
+				{
+					response = "Got it, I'll limit the animations recommendations just for you.";
+					prefani--;
+					emotion--;
+				}
+				else if(findKeyword(statement, "action") >= 0 || findKeyword(statement, "thriller") >= 0)
+				{
+					response = "I mean...I guess if you don't want me to I won't give you any more action movies...";
+					prefact--;
+				}
+			}
 		}
 		
-		else if (findKeyword(statement, "") >= 0)
+		else if (findKeyword(statement, "rated", 0) >= 0)
 		{
-			response = "";
-			emotion++;
+			response = ageCatagorizing(statement);
 		}
 
-		// Response transforming I want to statement
-		else if (findKeyword(statement, "scary", 0) >= 0)
+		else if (findKeyword(statement, "scary") >= 0 || findKeyword(statement, "gore") >= 0 || findKeyword(statement, "spooky") >= 0 || findKeyword(statement, "horror") >= 0)
 		{
-			response = transformhorrorscaryspookysupernatural(statement);
+			response = horrorMovies(statement);
+			prefhor++;
+			emotion++;
 		}
+		
+		else if (findKeyword(statement, "funny") >= 0 || findKeyword(statement, "comedy") >= 0 || findKeyword(statement, "laugh") >= 0)
+		{
+			response = comedyMovies(statement);
+			prefcom++;
+		}
+		
+		else if (findKeyword(statement, "animated") >= 0 || findKeyword(statement, "animation") >= 0 || findKeyword(statement, "motion picture") >= 0)
+		{
+			response = animationMovies(statement);
+			prefani++;
+			emotion++;
+		}
+		
+		else if(findKeyword(statement, "action") >= 0 || findKeyword(statement, "thriller") >= 0)
+		{
+			response = actionMovies(statement);
+			prefact++;
+		}
+		else
+		{
+			if (findKeyword(statement, "genre") >= 0)
+			{
+				response = getmoreRandomResponse();
+			}
+			response = getRandomResponse();
+		}
+		
+		/*else
+		{
+			response = "Sorry I currently do not have the knowlegde to answer that";
+		}*/
 		
 		return response;
 	}
-	
-	private String transformIGenreStatement(String statement)
+	// The following methods below each correspond to a different list of movies.
+	// the ageCatagorizing method contains the different movie rating lists.
+	private String ageCatagorizing(String statement)
 	{
-		return "nothing";
+		statement = statement.trim();
+		String lastChar = statement.substring(statement.length() - 1);
+		if (lastChar.equals(".") || lastChar.equals("?") || lastChar.equals("!"))
+		{
+			statement = statement.substring(0, statement.length() - 1);
+		}
+		String result = "";
+		if (findKeyword(statement, "G") >= 0)
+		{
+			result = "If you want a G rated movie, " + GList() + "is a great choice for kids";
+		}
+		else if ((findKeyword(statement, "PG - 13") >= 0) || (findKeyword(statement, "PG-13") >= 0))
+		{
+			result = "A great pg-13 movie is " + pg13List();
+		}
+		return result;
 	}
-	private String transformhorrorscaryspookysupernatural(String statement)
+	private String horrorMovies(String statement)
 	{
 		statement = statement.trim();
 		String lastChar = statement.substring(statement.length() - 1);
@@ -70,11 +145,11 @@ public class ChatBotSteven
 			statement = statement.substring(0, statement.length() - 1);
 		}
 		
-		return "If you like scary stuff, you can try watching " + randomNewScaryMovies;
+		return "If that is what you like, you should try watching " + horrorList() + ", really gets your heart racing!";
 		
 	}
 	
-	private String transformComedyHappy(String statement)
+	private String comedyMovies(String statement)
 	{
 		statement = statement.trim();
 		String lastChar = statement.substring(statement.length() - 1);
@@ -83,10 +158,10 @@ public class ChatBotSteven
 			statement = statement.substring(0, statement.length() - 1);
 		}
 		
-		return "If you want something funny you can try watching " + randomNewComedyMovies;
+		return comedyList() + " is a really funny one, don't eat anything while watching, you won't be able to breath!";
 	}
 	
-	private String transformKidsfamilyfriendly(String statement)
+	private String animationMovies(String statement)
 	{
 		statement = statement.trim();
 		String lastChar = statement.substring(statement.length() - 1);
@@ -95,9 +170,37 @@ public class ChatBotSteven
 			statement = statement.substring(0, statement.length() - 1);
 		}
 		
-		return "If you want something funny you can try watching " ;
+		return "If you want something animated one really deep and emotional one is " + animatedList();
 	}
 	
+	private String actionMovies(String statement)
+	{
+		statement = statement.trim();
+		String lastChar = statement.substring(statement.length() - 1);
+		if (lastChar.equals(".") || lastChar.equals("?") || lastChar.equals("!"))
+		{
+			statement = statement.substring(0, statement.length() - 1);
+		}
+		
+		return "Trust me, after watching " + actionList() + " you'd want to try out some crazy moves for yourself.";
+	}
+	
+	/**
+	 * Search for one word in phrase. The search is not case
+	 * sensitive. This method will check that the given goal
+	 * is not a substring of a longer string (so, for
+	 * example, "I know" does not contain "no").
+	 *
+	 * @param statement
+	 *            the string to search
+	 * @param goal
+	 *            the string to search for
+	 * @param startPos
+	 *            the character of the string to begin the
+	 *            search at
+	 * @return the index of the first occurrence of goal in
+	 *         statement or -1 if it's not found
+	 */
 	private int findKeyword(String statement, String goal,
 			int startPos)
 	{
@@ -145,27 +248,17 @@ public class ChatBotSteven
 
 		return -1;
 	}
-	
-	/**
-	 * Search for one word in phrase.  The search is not case sensitive.
-	 * This method will check that the given goal is not a substring of a longer string
-	 * (so, for example, "I know" does not contain "no").  The search begins at the beginning of the string.   
-	 * @param statement the string to search
-	 * @param goal the string to search for
-	 * @return the index of the first occurrence of goal in statement or -1 if it's not found
-	 */
+	//Shortened version for position starting at 0.
 	private int findKeyword(String statement, String goal)
 	{
 		return findKeyword (statement, goal, 0);
 	}
-	
-
 
 	/**
 	 * Pick a default response to use if nothing else fits.
 	 * @return a non-committal string
 	 */
-	private String getRandomResponse ()
+	private String getRandomResponse()
 	{
 		Random r = new Random ();
 		if (emotion == 0)
@@ -179,6 +272,54 @@ public class ChatBotSteven
 		return randomHappyResponses [r.nextInt(randomHappyResponses.length)];
 	}
 	
+	private String getmoreRandomResponse()
+	{
+		Random r = new Random();
+		if (prefhor > prefcom && prefhor > prefani && prefhor > prefact)
+		{
+			return randomprefhorResponses [r.nextInt(randomprefhorResponses.length)];
+		}
+		else if (prefcom > prefhor && prefcom > prefani && prefcom > prefact)
+		{
+			return randomprefcomResponses [r.nextInt(randomprefcomResponses.length)];
+		}
+		return "nothing!";
+	}
+	
+	private String horrorList()
+	{
+		Random r = new Random();
+		return randomNewScaryMovies [r.nextInt(randomNewScaryMovies.length)];
+	}
+	
+	private String comedyList()
+	{
+		Random r = new Random();
+		return randomNewComedyMovies [r.nextInt(randomNewComedyMovies.length)];
+	}
+	
+	private String animatedList()
+	{
+		Random r = new Random();
+		return randomAnimatedMovies [r.nextInt(randomAnimatedMovies.length)];
+	}
+	
+	private String actionList()
+	{
+		Random r = new Random();
+		return randomNewActionMovies [r.nextInt(randomNewActionMovies.length)];
+	}
+	private String GList()
+	{
+		Random r = new Random();
+		return randomGratedmovies [r.nextInt(randomGratedmovies.length)];
+	}
+	
+	private String pg13List()
+	{
+		Random r = new Random();
+		return randomPG13ratedmovies [r.nextInt(randomPG13ratedmovies.length)];
+	}
 	private String [] randomNeutralResponses = {"Interesting, tell me more",
 			"Hmmm.",
 			"Do you really think so?",
@@ -189,7 +330,80 @@ public class ChatBotSteven
 	};
 	private String [] randomAngryResponses = {"Bahumbug.", "Harumph", "The rage consumes me!"};
 	private String [] randomHappyResponses = {"H A P P Y, what's that spell?", "Today is a good day", "You make me feel like a brand new pair of shoes."};
-	private String [] randomNewScaryMovies = {"Happy Death Day.", "Anabelle: Creations.", "IT.", "Jigsaw.", "Get Out.", "Alience Covenant."};
-	private String [] randomNewComedyMovies = {"Baywatch", "Ghostbusters", "Bad Moms", "Deadpool", "The Big Sick"};
-	private String [] randomKidMovies = {""};
+	private String [] randomprefhorResponses =
+		{
+			"You like horror as much as I do!!",
+			"One great classic is The Ring, its about a movie where if you watch it you de in seven days! There have been many remakes of it but I think I prefer the original one, You should try it out.",
+			"You chose the correct genre!!",
+			"Gore! Blood! Death! JUMPSCARES! Good to get your heart racing you know....",
+			"Not part of the topic but you should read some books by Steven King if you like gothic literature."
+		};
+	private String [] randomprefcomResponses =
+		{
+			"I like funny stuff too but I like comedy TV shows more than movies, their kind of boring in my opinion.",
+			"If I were you I wouldn't watch comedy movies."
+		};
+	private String [] randomNewScaryMovies = 
+		{
+			"Happy Death Day", 
+			"Anabelle: Creations", 
+			"IT", 
+			"Jigsaw", 
+			"Get Out", 
+			"Alience Covenant"
+		};
+	private String [] randomNewComedyMovies = 
+		{
+			"Baywatch", 
+			"Ghostbusters", 
+			"Bad Moms", 
+			"Deadpool", 
+			"The Big Sick"
+		};
+	private String [] randomAnimatedMovies = 
+		{
+			"Snow White and the Seven Dwarfs", 
+			"Up", 
+			"Totoro", 
+			"Spirited Away", 
+			"The Secret World of Arriety",
+			"When Marnie Was There", 
+			"The Tale of Princess Kaguya", 
+			"Bambi", 
+			"Princess Mononoke",
+			"Beauty and the Beast"
+		};
+	private String [] randomNewActionMovies =
+		{
+			"The Foreigner",
+			"Iron Man",
+			"Man of Steel",
+			"White House Down",
+			"Thor",
+			"Spider-Man Homecoming",
+			"The Terminator",
+			"Mad Max: Fury Road"
+		};
+	private String [] randomGratedmovies = 
+		{
+			"Zootopia", "Inside Out", 
+			"Finding Nemo", 
+			"Toy Story", 
+			"The Lion King", 
+			"Aladdin", 
+			"WALL-E", 
+			"Mulan", 
+			"Ratatouille", 
+			"Cars", 
+			"The Polar Express"
+		};
+	private String [] randomPG13ratedmovies = 
+		{
+			"The Dark Knight", 
+			"The Avengers", 
+			"Avatar", 
+			"The Hunger Games", 
+			"Jurassic Park", 
+			"Iron Man"
+		};
 }

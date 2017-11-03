@@ -9,7 +9,7 @@ These recommendations are curated by our chatbot. It tries to guage what your pr
 - Recommendations for Movies 
 
 ## Donovan 
-- Recommendations for Restaurants/Food
+- Recommendations for Games/Rock,Paper,Scissors Bot
 
 ## Aneudys 
 - Recommendations for Music 

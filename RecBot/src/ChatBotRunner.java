@@ -13,11 +13,16 @@ public class ChatBotRunner
 	 */
 	public static void main(String[] args)
 	{
-		ChatBotSajarin chatbot1 = new ChatBotSajarin();
+		//ChatBotSajarin chatbot1 = new ChatBotSajarin(); 
+		//sorry just testing right now
 		ChatBotSteven chatbot2 = new ChatBotSteven();
 		ChatBotDonovan chatbot3 = new ChatBotDonovan();
 		
+<<<<<<< HEAD
 		System.out.println (chatbot3.getGreeting());
+=======
+		System.out.println (chatbot2.getGreeting());
+>>>>>>> branch 'master' of https://github.com/sajarindider/RecBot.git
 		Scanner in = new Scanner (System.in);
 		String statement = in.nextLine();
 		
@@ -25,7 +30,11 @@ public class ChatBotRunner
 
 		while (!statement.equals("Bye"))
 		{
+<<<<<<< HEAD
 			System.out.println (chatbot3.getResponse(statement));
+=======
+			System.out.println (chatbot2.getResponse(statement));
+>>>>>>> branch 'master' of https://github.com/sajarindider/RecBot.git
 			statement = in.nextLine();
 		}
 	}

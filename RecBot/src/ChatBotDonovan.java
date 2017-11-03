@@ -33,7 +33,7 @@ public class ChatBotDonovan
 		
 		if (statement.length() == 0)
 		{
-			response = "I can't help you if I have nothing to work with.";
+			response = "Enter a genre of games to start.";
 		}
 
 		else if (findKeyword(statement, "no") >= 0)
@@ -42,127 +42,46 @@ public class ChatBotDonovan
                 	emotion--;
 		}
 		
-		else if (findKeyword(statement,"Chinese") >= 0)
+		else if (findKeyword(statement,"Fps") >= 0 || findKeyword(statement,"fps") >= 0)
 		{
-			response = "I would reccomend Friendly's on 125 Church Ave, Brooklyn, NY 11218";
+			response = "Speaking of" + FPSList() + "is a good game";
+		}
+		else if (findKeyword(statement,"Platformer") >= 0) 
+		{
+			response = "I fond of" + PlatformList();
 			emotion++;
 		}
-		else if (findKeyword(statement,"Italian") >= 0) 
+		else if (findKeyword(statement,"Fighter") >= 0)
 		{
-			response ="Olive Garden is decent, I wouldnt order the pizza though.";
+			response = FighterList() + "is a competitve game to get into";
 			emotion++;
 		}
-		else if (findKeyword(statement,"Korean") >= 0)
+		else if (findKeyword(statement,"Mobile") >= 0)
 		{
-			response ="I'd recommend any shop in K-town but if you really want an amazing experience Tofu house is the way to go.";
-			emotion++;
+			response = "I dont like mobile games but if I had to I would recommend" + MobileList();
 		}
+		else if (findKeyword(statement,"MOBA") >= 0)
+		{
+			response ="I'm not familiar with MOBAs but one of the big three is" + MOBAList();
+		}
+		else if (findKeyword(statement,"RPG") >= 0)
+		{
+			response = "A classic RPG is " + RPGList();
+		}
+	}
+		
 		//Rock,Paper,Scissors.
-		if (findKeyword(statement,"Game") >= 0) 
+		if (findKeyword(statement,"Game") >= 0)
 		{
 			response = "";
 			rpsgame();
-			response =" ,want to play again? If you do type (game)";
-		
-		
-				
 		}
 		
 		
-		// Response transforming I want to statement
-		else if (findKeyword(statement, "I want to", 0) >= 0)
-		{
-			response = transformIWantToStatement(statement);
-		}
-		else if (findKeyword(statement, "I want",0) >= 0)
-		{
-			response = transformIWantStatement(statement);
-		}	
-		else
-		{
-			response = getRandomResponse();
-		}
-		
-		return response;
-	}
-	
-	/**
-	 * Take a statement with "I want to <something>." and transform it into 
-	 * "Why do you want to <something>?"
-	 * @param statement the user statement, assumed to contain "I want to"
-	 * @return the transformed statement
-	 */
-	private String transformIWantToStatement(String statement)
-	{
-		//  Remove the final period, if there is one
-		statement = statement.trim();
-		String lastChar = statement.substring(statement
-				.length() - 1);
-		if (lastChar.equals("."))
-		{
-			statement = statement.substring(0, statement
-					.length() - 1);
-		}
-		int psn = findKeyword (statement, "I want to", 0);
-		String restOfStatement = statement.substring(psn + 9).trim();
-		return "Why do you want to " + restOfStatement + "?";
-	}
-
-	
-	/**
-	 * Take a statement with "I want <something>." and transform it into 
-	 * "Would you really be happy if you had <something>?"
-	 * @param statement the user statement, assumed to contain "I want"
-	 * @return the transformed statement
-	 */
-	private String transformIWantStatement(String statement)
-	{
-		//  Remove the final period, if there is one
-		statement = statement.trim();
-		String lastChar = statement.substring(statement
-				.length() - 1);
-		if (lastChar.equals("."))
-		{
-			statement = statement.substring(0, statement
-					.length() - 1);
-		}
-		int psn = findKeyword (statement, "I want", 0);
-		String restOfStatement = statement.substring(psn + 6).trim();
-		return "Would you really be happy if you had " + restOfStatement + "?";
-	}
 	
 	
 	/**
-	 * Take a statement with "I <something> you" and transform it into 
-	 * "Why do you <something> me?"
-	 * @param statement the user statement, assumed to contain "I" followed by "you"
-	 * @return the transformed statement
-	 */
-	private String transformIYouStatement(String statement)
-	{
-		//  Remove the final period, if there is one
-		statement = statement.trim();
-		String lastChar = statement.substring(statement
-				.length() - 1);
-		if (lastChar.equals("."))
-		{
-			statement = statement.substring(0, statement
-					.length() - 1);
-		}
-		
-		int psnOfI = findKeyword (statement, "I", 0);
-		int psnOfYou = findKeyword (statement, "you", psnOfI);
-		
-		String restOfStatement = statement.substring(psnOfI + 1, psnOfYou).trim();
-		return "Why do you " + restOfStatement + " me?";
-	}
-	
-
-	
-	
-	/**
-	 * Search for one word in phrase. The search is not case
-	 * sensitive. This method will check that the given goal
+	 * Search for one word in phrase. MOk that the given goal
 	 * is not a substring of a longer string (so, for
 	 * example, "I know" does not contain "no").
 	 *
@@ -319,17 +238,59 @@ public class ChatBotDonovan
 		}	
 		return randomHappyResponses [r.nextInt(randomHappyResponses.length)];
 	}
+	private String FPSList()
+	{
+		Random r = new Random();
+		return randomfps [r.nextInt(randomfps.length)];
+	}
+	
+	private String RPGList()
+	{
+		Random r = new Random();
+		return randomrpg [r.nextInt(randomrpg.length)];
+	}
+	
+	private String MOBAList()
+	{
+		Random r = new Random();
+		return randomMOBA [r.nextInt(randomMOBA.length)];
+	}
+	
+	private String FighterList()
+	{
+		Random r = new Random();
+		return randomfighter [r.nextInt(randomfighter.length)];
+	}
+	private String PlatformList()
+	{
+		Random r = new Random();
+		return randomplatformer [r.nextInt(randomplatformer.length)];
+	}
+	
+	private String MobileList()
+	{
+		Random r = new Random();
+		return randommobile [r.nextInt(randommobile.length)];
+	}
 	
 	private String [] randomNeutralResponses = {"I don't think I can work with that.",
-			"I'm not sure what you mean",
-			"Nice Weather don't you say",
+			"Type (game) to play Rock,Paper,Scissors with me",
+			"Out of Rock,Paper, and Scissor which do you like the most?",
 			"How's it going",
-			"I not sure that's food related",
+			"I not sure that's Game related",
 			"I don't think I know enough to help you with that.",
-			"Could you say that again?"
+			"Sorry I was thinking about how to beat you. What did you say?"
 	};
-	private String [] randomAngryResponses = {"Bleh.", "I don't think this conversationt will continue", "Have a good day bye."};
-	private String [] randomHappyResponses = {"I'm am very excited", "Today's a great day for food...like everyday", "Ready for another day?"};
+	private String [] randomAngryResponses = {"Bleh.", "I don't think this conversation will continue", "Have a good day bye.","I don't think any game could make you happy."};
+	private String [] randomHappyResponses = {"I'm am very excited", "Today's a great day for gaming...like everyday", "Ready for another day?"};
 	private String [] rpsResponses = {"Rock","Paper","Scissors"};
+	private String [] randomfps = {"Overwatch","Call of Duty","Destiny 2","Battlefield 4"};
+	private String [] randomMOBA = {"Smite","League of Legends","DOTA 2",};
+	private String [] randomrpg = {"Final Fantasy 7","Fire Emblem","Dynasty Warriors"};
+	private String [] randomfighter = {"Skullgirls","Marvel vs. Capcom","Injustice","Street Fighter","Tekken"};
+	private String [] randomplatformer = {"Mario Odyssey","Sonic Mania","Banjo and Kazoey"};
+	private String [] randommobile = {"Infinity Blade Series","Angry Birds","Final Fantasy Mobius"};
 	
 }
+	
+
