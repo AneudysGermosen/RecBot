@@ -101,7 +101,7 @@ public class ChatBotSteven
 		}
 		else
 		{
-			if (findKeyword(statement, "genre") >= 0)
+			if (findKeyword(statement, "Opinion") >= 0)
 			{
 				response = getmoreRandomResponse();
 			}
@@ -283,7 +283,15 @@ public class ChatBotSteven
 		{
 			return randomprefcomResponses [r.nextInt(randomprefcomResponses.length)];
 		}
-		return "nothing!";
+		else if (prefani > prefhor && prefani > prefcom && prefani > prefact)
+		{
+			return randomprefaniResponses [r.nextInt(randomprefaniResponses.length)];
+		}
+		else if (prefact > prefani && prefact > prefhor && prefact > prefcom)
+		{
+			return randomprefactResponses [r.nextInt(randomprefactResponses.length)];
+		}
+		return randomnoprefResponses [r.nextInt(randomnoprefResponses.length)];
 	}
 	
 	private String horrorList()
@@ -341,7 +349,32 @@ public class ChatBotSteven
 	private String [] randomprefcomResponses =
 		{
 			"I like funny stuff too but I like comedy TV shows more than movies, their kind of boring in my opinion.",
-			"If I were you I wouldn't watch comedy movies."
+			"If I were you I wouldn't watch comedy movies.",
+			"I'm not trying to judge you but you should really watch TV comedy shows instead of movies.",
+			"You seem like a happy guy to enjoy comedy."
+		};
+	private String [] randomprefaniResponses =
+		{
+			"I love animated movies as well!!",
+			"You should really check out Ghibli Studios animations, they are so deep and so touching!",
+			"Disney has alrgiht animations once in awhile.",
+			"Dreamworks or Disney? I say niether.",
+			"It's good to feel like a child sometimes..."
+		};
+	private String [] randomprefactResponses =
+		{
+			"wow, I sure wish I could do what those people are doing in the movies....",
+			"If you really like action and fiction Marvel and DC is definitely the way to go!!!! (pst.. Marvel is better...)",
+			"Jackie Chen is pretty good, he does all his stunts, that's some strong will.",
+			"If you want to watch something old but amazing, The Terminator and the Matrix something you don't want to miss out on."
+		};
+	private String [] randomnoprefResponses =
+		{
+			"You seem like you like a wide variety of movies.",
+			"It's good to enjoy everything..I think..",
+			"I don't know about you but my favorite movies are animated movies and horror movies it's different.",
+			"I don't know what to say.. can you choose a genre already?",
+			"I may not have data of all the movies, but the ones recommended are guaranteed to be amazing!!"
 		};
 	private String [] randomNewScaryMovies = 
 		{
